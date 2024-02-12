@@ -1,0 +1,1 @@
+This project was meant as applying quantile regression on wages of various employees on the 'Wages' dataset to draw insights about the effects of various factors like race,country,age, eductaion etc. across various quantiles of salaries 
