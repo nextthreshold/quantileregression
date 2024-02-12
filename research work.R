@@ -1,0 +1,32 @@
+rm(list=ls())
+sala <- read_excel("C:/Users/Owner/Desktop/sala.xlsx")
+head(sala)
+library(quantreg)
+library(performance)
+library(olsrr)
+library(ggridges)
+library(dplyr)
+library(tidyverse)
+library(sjPlot)
+library(ISLR)
+set.seed(121)
+salary<- Wage %>%
+  group_by(jobclass)%>%
+  sample_n(1400)
+lr<-lm(wage~jobclass,data=salary)
+check_outliers(lr)
+check_normality(lr)
+check_homogeneity(lr)
+par(mfrow=c(2,2))
+plot(lr)
+head(salary)
+attach(salary)
+q<-rq(wage~jobclass,tau=seq(0.05,0.95,by=0.05))
+summary(q)%>%
+  plot(parm="jobclass2. Information")
+q2<-rq(wage~jobclass+age+race,tau=seq(0.05,0.95,by=0.05))
+summary(q2)%>%
+  plot(c("jobclass2. Information", "age", "race2. Black", "race3. Asian"))
+lr<-lm(wage~jobclass+age+race)
+lr
+summary(lr)
